@@ -1,0 +1,34 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+
+  build:
+    name: Build and push to DockerHub
+    runs-on: ubuntu-latest
+    # lol
+    strategy:
+      matrix:
+        folder: ["pwntools/py2", "pwntools/py3"]
+        include:
+          - folder: "pwntools/py2"
+            tag: "pwntools"
+            version: 2
+            # latest pwntools
+          - folder: "pwntools/py3"
+            tag: "pwntools"
+            version: 3
+            latest: true
+
+    steps:
+    
+    - name: Checkout main repository
+      uses: actions/checkout@v2
+      
+    - name: Build the image
+      run: docker build ${{ matrix.folder }} --file Dockerfile --tag deltaclock/${{ matrix.tag }}:${{ matrix.version }} 
