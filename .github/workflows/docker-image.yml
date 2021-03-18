@@ -31,4 +31,4 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Build the image
-      run: docker build --file Dockerfile --tag deltaclock/${{ matrix.tag }}:${{ matrix.version }} ${{ matrix.folder }} 
+      run: docker build --tag deltaclock/${{ matrix.tag }}:${{ matrix.version }} ${{ matrix.folder }} 
