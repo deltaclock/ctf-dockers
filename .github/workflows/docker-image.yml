@@ -49,5 +49,5 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
       - name: Push to DockerHub
-        if: ${{ matrix.latest }}
-        run: docker push deltaclock/${{ matrix.tag }}:${{ matrix.version }}
+        if: ${{ matrix.latest }} == true
+        run: docker push deltaclock/${{ matrix.tag }}:latest
