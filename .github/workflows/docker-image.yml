@@ -2,16 +2,15 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   schedule:
     - cron: "0 0 * * 0"
 
 jobs:
-
   build:
     name: Build and push to DockerHub
     runs-on: ubuntu-latest
-    # lol
+
     strategy:
       matrix:
         folder: ["pwntools/py2", "pwntools/py3"]
@@ -26,20 +25,29 @@ jobs:
             latest: true
 
     steps:
-    
-    - name: Checkout main repository
-      uses: actions/checkout@v2
-      
-    - name: Build the image
-      run: docker build --tag deltaclock/${{ matrix.tag }}:${{ matrix.version }} ${{ matrix.folder }}
-    
-        
-    - name: Login to DockerHub
-      uses: docker/login-action@v1 
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    
-    - name: Push to DockerHub
-      run: docker push deltaclock/${{ matrix.tag }}:${{ matrix.version }}
+      # - name: Checkout main repository
+      #   uses: actions/checkout@v2
 
+      # - name: Build the image
+      #   run: docker build --tag deltaclock/${{ matrix.tag }}:${{ matrix.version }} ${{ matrix.folder }}
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: ${{ matrix.folder }}
+          tags: deltaclock/${{ matrix.tag }}:${{ matrix.version }}
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+      - name: Push to DockerHub
+        if: ${{ matrix.latest }}
+        run: docker push deltaclock/${{ matrix.tag }}:${{ matrix.version }}
