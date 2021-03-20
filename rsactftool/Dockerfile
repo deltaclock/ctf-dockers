@@ -5,7 +5,10 @@ LABEL maintainer="deltaclock@pm.me"
 
 RUN sudo apt-get update -y && \
     sudo apt-get install -y libgmp3-dev libmpc-dev git && \
-    git clone https://github.com/Ganapati/RsaCtfTool.git && cd RsaCtfTool && \
-    python -m pip install -r requirements.txt -r optional-requirements.txt
+    git clone https://github.com/Ganapati/RsaCtfTool.git
+
+WORKDIR RsaCtfTool
+
+RUN sage -sh -c 'pip install -r requirements.txt -r optional-requirements.txt'
 
 CMD [ "/bin/bash" ]
