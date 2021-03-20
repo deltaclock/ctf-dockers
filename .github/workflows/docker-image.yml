@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        folder: ["pwntools/py2", "pwntools/py3"]
+        folder: ["pwntools/py2", "pwntools/py3", "rsactftool"]
         include:
           - folder: "pwntools/py2"
             tag: "pwntools"
@@ -24,6 +24,12 @@ jobs:
             tag: "pwntools"
             version: 3
             latest: true
+            # rsactftool using py3.8
+          - folder: "rsactftool"
+            tag: "rsactftool"
+            version: 3.8
+            latest: true
+          
 
     steps:
       - name: Checkout main repository
