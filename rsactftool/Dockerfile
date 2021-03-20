@@ -4,7 +4,7 @@ FROM sagemath/sagemath:9.3.beta6
 LABEL maintainer="deltaclock@pm.me"
 
 RUN sudo apt-get update -y && \
-    apt-get install -y libgmp3-dev libmpc-dev git && \
+    sudo apt-get install -y libgmp3-dev libmpc-dev git && \
     git clone https://github.com/Ganapati/RsaCtfTool.git && \
     pip3 install -r requirements.txt -r optional-requirements.txt
 
