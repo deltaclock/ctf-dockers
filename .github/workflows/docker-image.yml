@@ -33,7 +33,6 @@ jobs:
           - folder: "qiling/stable"
             tag: "qiling"
             version: "stable"
-            latest: true
           - folder: "qiling/dev"
             tag: "qiling"
             version: "dev"
