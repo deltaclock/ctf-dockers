@@ -37,6 +37,10 @@ jobs:
             tag: "qiling"
             version: "dev"
             latest: true
+          - folder: "volatility"
+            tag: "volatility"
+            version: 2
+            latest: true
           
 
     steps:
